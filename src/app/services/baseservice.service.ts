@@ -19,7 +19,6 @@ export class BaseserviceService {
     let headers=new HttpHeaders();
     headers = headers.set("Access-Control-Allow-Origin", "*");
     headers = headers.set("content-type", "application/json");
-    headers = headers.set("APIToken", environment.APIToken);
     headers = headers.set("UserToken", userToken || '');
     return headers;
   }
@@ -28,8 +27,6 @@ export class BaseserviceService {
     let userToken=sessionStorage.getItem("UserToken");
     let headers=new HttpHeaders();
     headers = headers.set("Access-Control-Allow-Origin", "*");
-    // headers = headers.set("content-type", "multipart/form-data");
-    headers = headers.set("APIToken", environment.APIToken);
     headers = headers.set("UserToken", userToken || '');
     return headers;
   }
