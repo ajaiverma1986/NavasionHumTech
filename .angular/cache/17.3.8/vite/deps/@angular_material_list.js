@@ -1,7 +1,4 @@
 import {
-  NG_VALUE_ACCESSOR
-} from "./chunk-KBJIIDRW.js";
-import {
   MatDividerModule
 } from "./chunk-K2JC4LEQ.js";
 import {
@@ -27,6 +24,9 @@ import {
   coerceNumberProperty,
   hasModifierKey
 } from "./chunk-WCHEYOHP.js";
+import {
+  NG_VALUE_ACCESSOR
+} from "./chunk-KBJIIDRW.js";
 import {
   CommonModule,
   NgTemplateOutlet
