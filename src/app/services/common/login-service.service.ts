@@ -4,7 +4,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { LoginRequest, RegisterUserRequest } from '../../RequestModel/LoginRequest';
 import { Authorization } from '../../RequestModel/Authorization';
 import { Observable } from 'rxjs';
-import { SimpleResponse } from '../../RequestModel/MasterDataResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -29,14 +28,14 @@ apiUrl=environment.baseurl;
     let headers: HttpHeaders = this.getDefaultHeader();
     return this.http.post<Authorization>(this.apiUrl + "/AA/login", loginreq,  {headers: headers});
   }
-  RegisterUser(regdata:RegisterUserRequest): Observable<SimpleResponse> {
+  // RegisterUser(regdata:RegisterUserRequest): Observable<SimpleResponse> {
    
-    let headers: HttpHeaders = this.getDefaultHeader();
-    return this.http.post<SimpleResponse>(this.apiUrl + "/User/CreateOrgAPIPartner", regdata,  {headers: headers});
-  }
-  GetUserDetails(UserName:string): Observable<SimpleResponse> {
+  //   let headers: HttpHeaders = this.getDefaultHeader();
+  //   return this.http.post<SimpleResponse>(this.apiUrl + "/User/CreateOrgAPIPartner", regdata,  {headers: headers});
+  // }
+  // GetUserDetails(UserName:string): Observable<SimpleResponse> {
    
-    let headers: HttpHeaders = this.getDefaultHeader();
-    return this.http.get<SimpleResponse>(this.apiUrl + "/User/GetUserMasterDetailsforConfig?UserName="+UserName,  {headers: headers});
-  }
+  //   let headers: HttpHeaders = this.getDefaultHeader();
+  //   return this.http.get<SimpleResponse>(this.apiUrl + "/User/GetUserMasterDetailsforConfig?UserName="+UserName,  {headers: headers});
+  // }
 }

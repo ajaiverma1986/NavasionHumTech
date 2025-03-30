@@ -5,7 +5,6 @@ import { RouterModule, Router } from '@angular/router';
 import { LoginServiceService } from '../../../services/common/login-service.service';
 import { NavHeaderComponent } from "../nav-header/nav-header.component";
 import { FooterComponent } from "../footer/footer.component";
-import { ListUserMasterResponse } from '../../../ResponseModel/UserResponse';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NgxSpinnerService, NgxSpinnerModule } from "ngx-spinner";
@@ -20,7 +19,6 @@ import { NgxSpinnerService, NgxSpinnerModule } from "ngx-spinner";
 })
 export class LoginComponent {
 
-  Model: ListUserMasterResponse = new ListUserMasterResponse();
 
   errors: any;
   constructor(private fb: FormBuilder, private loginService: LoginServiceService, private router: Router, private spinner: NgxSpinnerService) {
@@ -59,20 +57,20 @@ export class LoginComponent {
           sessionStorage.setItem("Has error", authorization.HasError);
           sessionStorage.setItem("Uname", this.loginForm.get("Usercode")?.value);
 
-          this.loginService.GetUserDetails(this.loginForm.get("Usercode")?.value).subscribe({
-            next: (data) => {
-              this.Model = data.Result;
-              sessionStorage.setItem("uttt", this.Model.UserTypeId.toString());
+          // this.loginService.GetUserDetails(this.loginForm.get("Usercode")?.value).subscribe({
+          //   next: (data) => {
+          //     this.Model = data.Result;
+          //     sessionStorage.setItem("uttt", this.Model.UserTypeId.toString());
 
-              if (this.Model.UserTypeId == 3) {
-                this.router.navigate(['/Dashboard/ParProfile']);
-              }
-              else {
-                this.router.navigate(['/Dashboard/UserProfile']);
-              }
-              this.spinner.hide();
-            }
-          });
+          //     if (this.Model.UserTypeId == 3) {
+          //       this.router.navigate(['/Dashboard/ParProfile']);
+          //     }
+          //     else {
+          //       this.router.navigate(['/Dashboard/UserProfile']);
+          //     }
+          //     this.spinner.hide();
+          //   }
+          // });
 
 
 
