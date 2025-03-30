@@ -1,0 +1,63 @@
+
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #sidenav mode="side" opened="true">
+    
+    <mat-nav-list>
+      <mat-list-item (click)="sidenav.toggle()">
+        <!-- <img src="../../../../assets/logo/Logo.png" alt="Logo" width="150" height="40"> -->
+      </mat-list-item>
+      @for (item of ParMenu; track $index) {
+         <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+           
+            {{item.Title}}
+
+          </mat-panel-title>
+          
+        </mat-expansion-panel-header>
+        @if (item.submenu.length>0) {
+          <mat-nav-list>
+            @for (item1 of item.submenu; track $index) {
+              <mat-list-item routerLink="{{item1.RoutePath}}">{{item1.Title}}</mat-list-item>
+            }
+          </mat-nav-list>
+        }
+       
+      </mat-expansion-panel>
+      }
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <mat-toolbar style="background-color: #42a8df;">
+      <button mat-icon-button (click)="sidenav.toggle()">
+      <mat-icon>menu</mat-icon>
+      </button>
+      <span>{{apptitle}}</span>
+      
+      <span style="flex: 1 1 auto;"></span>
+    <button mat-icon-button [matMenuTriggerFor]="dropdownMenu">
+      <!-- <mat-icon>more_vert</mat-icon> -->
+      <mat-icon>account_circle</mat-icon>
+      
+    </button>
+    <mat-menu #dropdownMenu="matMenu">
+      <button mat-menu-item>{{username}}</button>
+      <mat-divider></mat-divider>
+      <button mat-menu-item (click)="GotoHome()">Home</button>
+      <mat-divider></mat-divider>
+      <button mat-menu-item (click)="Logout()">Logout</button>
+    </mat-menu>
+    </mat-toolbar>
+    <div class="content">
+     <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+<app-footer></app-footer>
+
+
+
+
+
