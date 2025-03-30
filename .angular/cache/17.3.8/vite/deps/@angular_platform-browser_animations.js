@@ -6,16 +6,16 @@ import {
   NoopAnimationDriver,
   WebAnimationsDriver,
   WebAnimationsStyleNormalizer
-} from "./chunk-ESMUNZPT.js";
+} from "./chunk-BCWCEA6N.js";
 import {
   BrowserModule,
   DomRendererFactory2
-} from "./chunk-3XKS6XX6.js";
-import "./chunk-X7G6GAIB.js";
-import "./chunk-2WM3FXBG.js";
+} from "./chunk-TSTTVWMZ.js";
+import "./chunk-H555YENO.js";
+import "./chunk-HI4VEVZD.js";
 import {
   DOCUMENT
-} from "./chunk-SD7M6TV2.js";
+} from "./chunk-O3GGFHCE.js";
 import {
   ANIMATION_MODULE_TYPE,
   ChangeDetectionScheduler,
@@ -31,7 +31,7 @@ import {
   ɵɵdefineInjector,
   ɵɵdefineNgModule,
   ɵɵinject
-} from "./chunk-QO7W7WCN.js";
+} from "./chunk-EPRKXYLU.js";
 import "./chunk-WKYGNSYM.js";
 
 // node_modules/@angular/platform-browser/fesm2022/animations.mjs

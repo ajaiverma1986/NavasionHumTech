@@ -5,9 +5,6 @@ import { PageNofoundComponent } from './page-nofound/page-nofound.component';
 import { ForgetpwdComponent } from './component/common/forgetpwd/forgetpwd.component';
 import { AuthGaurdLoginService, AuthGaurdService } from './services/auth-gaurd-login.service';
 import { RegistrationComponent } from './component/common/registration/registration.component';
-import { CreateAppComponent } from './component/APIM/create-app/create-app.component';
-import { CreateAPIUserComponent } from './component/APIM/create-apiuser/create-apiuser.component';
-import { UserProfileComponent } from './component/common/user-profile/user-profile.component';
 import { RegisterComponent } from './component/Registration/register/register.component';
 import { DeviceConnectComponent } from './component/Registration/device-connect/device-connect.component';
 
@@ -23,9 +20,6 @@ export const routes: Routes = [
   {
     path: 'Dashboard', canActivate:[AuthGaurdService], component: AdminDashboardComponent,title:"Dashboard", children: [
       
-      {path: 'AppMgr', component: CreateAppComponent,title:"Application"},
-      {path: 'APIuser', component: CreateAPIUserComponent,title:"Users"},
-      {path: 'UserProfile', component: UserProfileComponent,title:"User Manager"},
     ]
   },
   { path: '**', pathMatch: 'full',  component: PageNofoundComponent }, 

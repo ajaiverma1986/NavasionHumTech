@@ -12,7 +12,6 @@ import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { UserMasterService } from '../../../services/ApplicationServices/user-master.service';
 import { ApplicationMenuResponse, ApplicationParentMenuResponse } from '../../../RequestModel/BaseResponse';
 
 
@@ -39,7 +38,7 @@ export class AdminDashboardComponent {
   UserTypeId!:number;
   HomeUrl!:string;
 
-  constructor(private userser: UserMasterService, private router: Router) {
+  constructor( private router: Router) {
 
   }
 
@@ -54,30 +53,14 @@ export class AdminDashboardComponent {
   }
 
   ngOnInit() {
-    //this.apptitle="Sanyukt Pay API Dashboard"
-    this.apptitle = "API Dashboard"
-    this.username = sessionStorage.getItem("Display Name") || 'Sanyukt pay';
-    this.UserTypeId =Number(sessionStorage.getItem("uttt")) || 0;
-    this.userser.ListAllAppMenu().subscribe({
-      next: (data) => {
-        this.ParMenu = data.Result;
-      }
-    });
-
-    
+   
   }
   Logout() {
     sessionStorage.clear();
     this.router.navigate(['/login']);
   }
 
-  GetallSubmenu(Menuid: number) {
-    this.userser.ListAllAppSubMenu(Menuid).subscribe({
-      next: (data) => {
-        this.subMenu = data.Result;
-      }
-    });
-  }
+ 
   GotoHome(){
     if (this.UserTypeId == 3) {
       this.router.navigate(['/Dashboard/ParProfile']);
