@@ -6,6 +6,7 @@ import { ForgetpwdComponent } from './component/common/forgetpwd/forgetpwd.compo
 import { AuthGaurdLoginService, AuthGaurdService } from './services/auth-gaurd-login.service';
 import { RegisterComponent } from './component/Registration/register/register.component';
 import { DeviceConnectComponent } from './component/Registration/device-connect/device-connect.component';
+import { RequestorderComponent } from './component/requestorder/requestorder.component';
 
 
 export const routes: Routes = [
@@ -17,7 +18,7 @@ export const routes: Routes = [
   {path: 'login', canActivate:[AuthGaurdLoginService], component:LoginComponent,title:"Login"},
   {
     path: 'Dashboard', canActivate:[AuthGaurdService], component: AdminDashboardComponent,title:"Dashboard", children: [
-      
+      {path: 'WebOrder', component: RequestorderComponent,title:"Order Master"},
     ]
   },
   { path: '**', pathMatch: 'full',  component: PageNofoundComponent }, 

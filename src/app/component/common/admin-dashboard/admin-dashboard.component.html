@@ -6,26 +6,17 @@
       <mat-list-item (click)="sidenav.toggle()">
         <!-- <img src="../../../../assets/logo/Logo.png" alt="Logo" width="150" height="40"> -->
       </mat-list-item>
-      @for (item of ParMenu; track $index) {
+    
          <mat-expansion-panel>
         <mat-expansion-panel-header>
           <mat-panel-title>
-           
-            {{item.Title}}
-
+           Reports
           </mat-panel-title>
-          
         </mat-expansion-panel-header>
-        @if (item.submenu.length>0) {
           <mat-nav-list>
-            @for (item1 of item.submenu; track $index) {
-              <mat-list-item routerLink="{{item1.RoutePath}}">{{item1.Title}}</mat-list-item>
-            }
+            <mat-list-item routerLink="WebOrder">Order List</mat-list-item>
           </mat-nav-list>
-        }
-       
       </mat-expansion-panel>
-      }
     </mat-nav-list>
   </mat-sidenav>
 

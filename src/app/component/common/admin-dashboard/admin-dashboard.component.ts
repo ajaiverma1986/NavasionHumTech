@@ -53,7 +53,8 @@ export class AdminDashboardComponent {
   }
 
   ngOnInit() {
-   
+    this.apptitle = "Dashboard"
+    this.username = sessionStorage.getItem("Display Name") || 'Dashboard';
   }
   Logout() {
     sessionStorage.clear();

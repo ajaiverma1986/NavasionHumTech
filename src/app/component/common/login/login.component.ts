@@ -19,7 +19,9 @@ import { NgxSpinnerService, NgxSpinnerModule } from "ngx-spinner";
 })
 export class LoginComponent {
 
-
+responsemdl!:any[];
+usernamed!:string
+UserPassd!:string;
   errors: any;
   constructor(private fb: FormBuilder, private loginService: LoginServiceService, private router: Router, private spinner: NgxSpinnerService) {
     this.createForm();
@@ -40,40 +42,23 @@ export class LoginComponent {
 
   onSubmit() {
     this.spinner.show();
-
-    this.loginService.login(this.loginForm.get("Usercode")?.value, this.loginForm.get('password')?.value).subscribe({
+this.usernamed=this.loginForm.get("Usercode")?.value;
+this.UserPassd=this.loginForm.get("password")?.value;
+    this.loginService.login().subscribe({
       next: (authorization) => {
-        if (authorization.HasError) {
+        this.responsemdl=authorization.value;
+        let filterdata=this.responsemdl.filter(username=>username.Web_User_Id==this.usernamed && username.Web_User_Password==this.UserPassd)
+        console.log(filterdata);
+        if (filterdata.length==0) {
           sessionStorage.setItem("isloginvalid", "0")
-          this.errors = authorization.Errors;
           this.spinner.hide();
-          alert(this.errors[0].ErrorMessage);
+          alert("Invaild Username or Password");
         } else {
-
-
           sessionStorage.setItem("isloginvalid", "1")
-          sessionStorage.setItem("Display Name", authorization.DisplayName);
-          sessionStorage.setItem("UserToken", authorization.UserToken);
-          sessionStorage.setItem("Has error", authorization.HasError);
+          sessionStorage.setItem("Display Name", this.loginForm.get("Usercode")?.value);
           sessionStorage.setItem("Uname", this.loginForm.get("Usercode")?.value);
-
-          // this.loginService.GetUserDetails(this.loginForm.get("Usercode")?.value).subscribe({
-          //   next: (data) => {
-          //     this.Model = data.Result;
-          //     sessionStorage.setItem("uttt", this.Model.UserTypeId.toString());
-
-          //     if (this.Model.UserTypeId == 3) {
-          //       this.router.navigate(['/Dashboard/ParProfile']);
-          //     }
-          //     else {
-          //       this.router.navigate(['/Dashboard/UserProfile']);
-          //     }
-          //     this.spinner.hide();
-          //   }
-          // });
-
-
-
+          this.router.navigate(['/Dashboard']);
+          this.spinner.hide();
         }
       },
       error: (error) => {
