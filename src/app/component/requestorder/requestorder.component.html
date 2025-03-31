@@ -2,7 +2,7 @@
     <div class="header">
         <h3>Order Master</h3>
     </div>
-    <form>
+    <form [formGroup]="frmorder" (ngSubmit)="onSubmit()">
         <div class="row">
             <div class="col-md-12">
                 <span>General</span>
@@ -21,17 +21,17 @@
                     <input type="text" class="form-control" placeholder="No of Order">
                 </div>
                 <div class="mb-3">
-                    <select class="form-control">
-                        <option selected>Order Type</option>
-                        <option>Course 1</option>
-                        <option>Course 2</option>
-                        <option>Course 3</option>
+                    <select class="form-control" name="OrderType" [(ngModel)]="selectedOrdertype"  formControlName="OrderType">
+                       @for (item of orderType; track $index) {
+                        <option [value]="item" selected="item=selectedOrdertype">{{item}}</option>
+                       }
                     </select>
                 </div>
                 <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="Order Date">
+                    <input type="text" class="form-control" placeholder="Order Date" name="OrderDate" formControlName="OrderDate" ngbDatepicker #d="ngbDatepicker" [(ngModel)]="orderDateval" (click)="d.toggle()">
                 </div>
                 <div class="mb-3">
+                    
                     <select class="form-control">
                         <option selected>Customer No</option>
                         <option>Course 1</option>
@@ -43,12 +43,12 @@
                     <input type="text" class="form-control" placeholder="Customer Name">
                 </div>
                 <div class="mb-3">
-                    <select class="form-control">
-                        <option selected>Delivery To</option>
-                        <option>Course 1</option>
-                        <option>Course 2</option>
-                        <option>Course 3</option>
-                    </select>
+                    <select class="form-control" name="DeliveryTo" [(ngModel)]="selectedShipAddresstype"  formControlName="DeliveryTo">
+                        @for (item of AddressshipingTypes; track $index) {
+                         <option [value]="item" selected="item=selectedShipAddresstype">{{item}}</option>
+                        }
+                     </select>
+                   
                 </div>
                 <div class="mb-3">
                     <select class="form-control">
@@ -154,10 +154,12 @@
                     <input type="text" class="form-control" placeholder="Train FNR No">
                 </div>
                 <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="Terminal in Date">
+                    <input type="text" class="form-control" placeholder="Terminal Date" name="TerminalDate" formControlName="TerminalDate" ngbDatepicker #d1="ngbDatepicker" [(ngModel)]="TerminalDateval" (click)="d1.toggle()">
+                   
                 </div>
                 <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="Train Departure Date">
+                    <input type="text" class="form-control" placeholder="Train Departure Date" name="TrainDepatureDate" formControlName="TrainDepatureDate" ngbDatepicker #d2="ngbDatepicker" [(ngModel)]="TrainDDateval" (click)="d2.toggle()">
+                    
                 </div>
                 <div class="mb-3">
                     <input type="text" class="form-control" placeholder="Payment Terms Codes">
