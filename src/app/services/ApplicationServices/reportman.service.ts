@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BaseserviceService } from '../baseservice.service';
-import { GetDayBookRequest, TxnListRequest, UserStatementRequest } from '../../RequestModel/ReportRequest';
+import {  TxnListRequest } from '../../RequestModel/ReportRequest';
 import { Observable } from 'rxjs';
-import { ListResponse } from '../../RequestModel/BaseResponse';
-import { SimpleResponse } from '../../RequestModel/MasterDataResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -12,25 +10,20 @@ export class ReportmanService  {
 
   constructor(private apiconnector: BaseserviceService) { }
 
-  PayoutTransactionReport(PostData: TxnListRequest): Observable<ListResponse> {
-
-    return this.apiconnector.PostAPI("/Transaction/GetAllPayoutTransaction", PostData);
+  GetAddressTypeMaster(): Observable<any> {
+    return this.apiconnector.GetAPI("BC240/ODataV4/Company('SSSPL%20LIVE')/AddressMaster");
   }
-  ListUserStatement(PostData: UserStatementRequest): Observable<ListResponse> {
-
-    return this.apiconnector.PostAPI("/Transaction/GetUSerStatement", PostData);
+  GetCustomerList(): Observable<any> {
+    return this.apiconnector.GetAPI("BC240/ODataV4/Company('SSSPL%20LIVE')/Customer");
   }
-  GetTransactionSummaryByUserId(Userid:number): Observable<SimpleResponse> {
-
-    return this.apiconnector.GetAPI("/Report/GetTransactionSummaryByUserId?UserID="+Userid);
+  GetcommItem(): Observable<any> {
+    return this.apiconnector.GetAPI("BC240/ODataV4/Company('SSSPL%20LIVE')/CommItem");
   }
-  GetDayBookByUserId(PostData: GetDayBookRequest): Observable<SimpleResponse> {
-
-    return this.apiconnector.PostAPI("/Transaction/GetDayBookByUserId", PostData);
+  GetPostCode(): Observable<any> {
+    return this.apiconnector.GetAPI("BC240/ODataV4/Company('SSSPL%20LIVE')/PostCode");
   }
-  GetallFirmDetail(Userid:number): Observable<SimpleResponse> {
+  WebOrderMaster(PostData: TxnListRequest): Observable<any> {
 
-    return this.apiconnector.GetAPI("/Report/GetallFirmDetail?UserID="+Userid);
+    return this.apiconnector.PostAPI("BC240/ODataV4/Company('SSSPL%20LIVE%202025')/WebOrder", PostData);
   }
-
 }

@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 })
 export class BaseserviceService {
 
-  apiurl = environment.baseurl+environment.Portno+"/";
+  apiurl = environment.baseurl+"/";
   // authInfo = Buffer.from(`${environment.ApiUsername}:${environment.ApiPassword}`).toString('base64');
   authInfo=btoa(environment.ApiUsername+":"+environment.ApiPassword);
   constructor(private http: HttpClient) { }
