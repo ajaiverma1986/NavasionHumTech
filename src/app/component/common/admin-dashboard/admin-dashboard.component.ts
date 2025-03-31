@@ -53,6 +53,7 @@ export class AdminDashboardComponent {
   }
 
   ngOnInit() {
+    this.toggleMenu();
     this.apptitle = "Dashboard"
     this.username = sessionStorage.getItem("Display Name") || 'Dashboard';
   }
