@@ -48,7 +48,7 @@ this.UserPassd=this.loginForm.get("password")?.value;
       next: (authorization) => {
         this.responsemdl=authorization.value;
         let filterdata=this.responsemdl.filter(username=>username.Web_User_Id==this.usernamed && username.Web_User_Password==this.UserPassd)
-        console.log(filterdata);
+        
         if (filterdata.length==0) {
           sessionStorage.setItem("isloginvalid", "0")
           this.spinner.hide();

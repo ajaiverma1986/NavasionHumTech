@@ -31,13 +31,11 @@
                     <input type="text" class="form-control" placeholder="Order Date" name="OrderDate" formControlName="OrderDate" ngbDatepicker #d="ngbDatepicker" [(ngModel)]="orderDateval" (click)="d.toggle()">
                 </div>
                 <div class="mb-3">
-                    
-                    <select class="form-control">
-                        <option selected>Customer No</option>
-                        <option>Course 1</option>
-                        <option>Course 2</option>
-                        <option>Course 3</option>
-                    </select>
+                    <select class="form-control" name="Customer" [(ngModel)]="selectedCustomer"  formControlName="Customer">
+                        @for (item of custmodel; track $index) {
+                         <option [value]="item.No" selected="item=selectedCustomer">{{item.Name}}-{{item.No}}</option>
+                        }
+                     </select>
                 </div>
                 <div class="mb-3">
                     <input type="text" class="form-control" placeholder="Customer Name">
