@@ -11,19 +11,19 @@ export class ReportmanService  {
   constructor(private apiconnector: BaseserviceService) { }
 
   GetAddressTypeMaster(): Observable<any> {
-    return this.apiconnector.GetAPI("BC240/ODataV4/Company('SSSPL%20LIVE')/AddressMaster");
+    return this.apiconnector.GetAPI("AddressMaster");
   }
   GetCustomerList(): Observable<any> {
-    return this.apiconnector.GetAPI("BC240/ODataV4/Company('SSSPL%20LIVE')/Customer");
+    return this.apiconnector.GetAPI("Customer");
   }
   GetcommItem(): Observable<any> {
-    return this.apiconnector.GetAPI("BC240/ODataV4/Company('SSSPL%20LIVE')/CommItem");
+    return this.apiconnector.GetAPI("CommItem");
   }
   GetPostCode(): Observable<any> {
-    return this.apiconnector.GetAPI("BC240/ODataV4/Company('SSSPL%20LIVE')/PostCode");
+    return this.apiconnector.GetAPI("PostCode");
   }
   WebOrderMaster(PostData: TxnListRequest): Observable<any> {
 
-    return this.apiconnector.PostAPI("BC240/ODataV4/Company('SSSPL%20LIVE%202025')/WebOrder", PostData);
+    return this.apiconnector.PostAPI("WebOrder", PostData);
   }
 }

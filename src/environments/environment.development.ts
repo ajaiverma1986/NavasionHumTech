@@ -1,7 +1,9 @@
 export const environment = {
     Production:false,
-   baseurl:"http://111.90.175.54:7048/",
+   //baseurl:"http://111.90.175.54:7048/",
+   baseurl:"http://shreeshipping.com:7048/",
    Portno:7048,
    ApiUsername:"BCAdmin",
-   ApiPassword:"DelGuj@@2024@@"
+   ApiPassword:"DelGuj@@2024@@",
+   companyName:"SSSPL/ODataV4/Company('SSSPL%202025')/"
 };

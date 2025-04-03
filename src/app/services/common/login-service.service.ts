@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
 export class LoginServiceService {
 
   apiurl = environment.baseurl;
+  companyName = environment.companyName;
   //authInfo = Buffer.from(`${environment.ApiUsername}:${environment.ApiPassword}`).toString('base64');
   authInfo=btoa(environment.ApiUsername+":"+environment.ApiPassword);
   constructor(private http: HttpClient) {
@@ -24,7 +25,7 @@ export class LoginServiceService {
   }
   login(): Observable<any> {
     let headers: HttpHeaders = this.getDefaultHeader();
-    return this.http.get<any>(this.apiurl+"BC240/ODataV4/Company('SSSPL%20LIVE')/WebUserList", { headers: headers });
+    return this.http.get<any>(this.apiurl+this.companyName+"WebUserList", { headers: headers });
   }
 
 }

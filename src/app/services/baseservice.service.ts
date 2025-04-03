@@ -10,7 +10,8 @@ import { Observable } from 'rxjs';
 })
 export class BaseserviceService {
 
-  apiurl = environment.baseurl+"/";
+  apiurl = environment.baseurl;
+  companyName = environment.companyName;
   // authInfo = Buffer.from(`${environment.ApiUsername}:${environment.ApiPassword}`).toString('base64');
   authInfo=btoa(environment.ApiUsername+":"+environment.ApiPassword);
   constructor(private http: HttpClient) { }
@@ -24,11 +25,11 @@ export class BaseserviceService {
 
   GetAPI(Url: string): Observable<any> {
     let headers: HttpHeaders = this.getDefaultHeader();
-    return this.http.get<any>(this.apiurl + Url, { headers: headers });
+    return this.http.get<any>(this.apiurl+this.companyName + Url, { headers: headers });
   }
   PostAPI(Url: string, PostData: any): Observable<any> {
     let headers: HttpHeaders = this.getDefaultHeader();
-    return this.http.post<any>(this.apiurl + Url, PostData, { headers: headers })
+    return this.http.post<any>(this.apiurl+this.companyName + Url, PostData, { headers: headers })
   }
 
 }
