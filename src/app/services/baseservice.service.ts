@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.development';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { url } from 'node:inspector';
 
 
 
@@ -23,13 +24,13 @@ export class BaseserviceService {
     return headers;
   }
 
-  GetAPI(Url: string): Observable<any> {
+  GetAPI(Urln: string): Observable<any> {
     let headers: HttpHeaders = this.getDefaultHeader();
-    return this.http.get<any>(this.apiurl+this.companyName + Url, { headers: headers });
+    return this.http.get<any>(this.apiurl+Urln+this.companyName , { headers: headers });
   }
-  PostAPI(Url: string, PostData: any): Observable<any> {
+  PostAPI(Urln: string, PostData: any): Observable<any> {
     let headers: HttpHeaders = this.getDefaultHeader();
-    return this.http.post<any>(this.apiurl+this.companyName + Url, PostData, { headers: headers })
+    return this.http.post<any>(this.apiurl+Urln+this.companyName , PostData, { headers: headers })
   }
 
 }

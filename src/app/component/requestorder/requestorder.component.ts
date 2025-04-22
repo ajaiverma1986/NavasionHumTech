@@ -7,12 +7,13 @@ import { OrderTypes, AddressShipingType } from '../../EnumData/EnumDataRequest';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { CustomerResponse } from '../../ResponseModel/ReportResponse';
+import { AddressTypeMasterResponse, CommItemWebResponse, CustomerResponse } from '../../ResponseModel/ReportResponse';
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-requestorder',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, NgbModule],
+  imports: [ReactiveFormsModule, CommonModule, NgbModule,NgxSpinnerModule],
   templateUrl: './requestorder.component.html',
   styleUrl: './requestorder.component.scss'
 })
@@ -20,24 +21,33 @@ export class RequestorderComponent extends BasecomponentComponent implements OnI
   orderType: any[] = Object.keys(OrderTypes).filter(key => isNaN(Number(key)));
   AddressshipingTypes = Object.keys(AddressShipingType).filter(key => isNaN(Number(key)));
   frmorder!: FormGroup;
-  selectedOrdertype = signal<OrderTypes>(OrderTypes['Order Type']);
-  selectedShipAddresstype = signal<AddressShipingType>(AddressShipingType['Factory/Destination']);
+  selectedShipAddresstype!:string;
   orderDateval: any;
   TerminalDateval: any;
   TrainDDateval: any;
-  SelectedCust!:string;
   selectedCustomer!:string;
+  selectedDeliveryTo!:string;
+  selectedCommodity!:string;
+  selectedOrdertype1!:string;
   custmodel!:CustomerResponse[];
+  addressTypeModel!: AddressTypeMasterResponse[];
+  CommItemWebModel!:CommItemWebResponse[];
 
-  constructor(private router: Router, toast: ToastrService, private rpts: ReportmanService, private fb: FormBuilder) {
+  constructor(private router: Router, toast: ToastrService, private rpts: ReportmanService, private fb: FormBuilder, private spinner: NgxSpinnerService) {
     super(toast);
     this.createOrderForm();
   }
   ngOnInit(): void {
-
-    this.rpts.GetAddressTypeMaster().subscribe({
+    this.spinner.show();
+    this.selectedDeliveryTo="0";
+    this.selectedCommodity="0";
+    this.selectedCustomer="0";
+    this.selectedOrdertype1="0";
+    this.selectedShipAddresstype="0";
+    this.rpts.GetAddressList().subscribe({
       next: (result) => {
-        //console.log("Address Type List:-", result);
+        this.addressTypeModel = result.value;
+
       }
     });
 
@@ -49,15 +59,12 @@ export class RequestorderComponent extends BasecomponentComponent implements OnI
 
     this.rpts.GetcommItem().subscribe({
       next: (result) => {
-       // console.log("GetcommItem List:-", result);
+       this.CommItemWebModel=result.value;
       }
     });
 
-    this.rpts.GetPostCode().subscribe({
-      next: (result) => {
-       // console.log("GetPostCode List:-", result);
-      }
-    });
+    this.spinner.hide();
+    
   }
   onSubmit() {
 
@@ -69,7 +76,29 @@ export class RequestorderComponent extends BasecomponentComponent implements OnI
       OrderDate: [''],
       TerminalDate: [''],
       TrainDepatureDate: [''],
-      Customer: ['']
+      Customer: [''],
+      CustomerName: [''],
+      DeliveryToName: [''],
+      Comodity: [''],
+      ComodityName: [''],
+    });
+  }
+  onChangeCustomer() {
+    let filterdata = this.custmodel.filter(cust => cust.no == this.selectedCustomer);
+    this.frmorder.patchValue({
+      CustomerName: filterdata[0].name 
+    });
+  }
+  onChangeDeliveryTo() {
+    let filterdata = this.addressTypeModel.filter(cust => cust.partyCode == this.selectedDeliveryTo);
+    this.frmorder.patchValue({
+      DeliveryToName: filterdata[0].partyName 
+    });
+  }
+  onChangeComodity() {
+    let filterdata = this.CommItemWebModel.filter(cust => cust.no == this.selectedCommodity);
+    this.frmorder.patchValue({
+      ComodityName: filterdata[0].description 
     });
   }
 }

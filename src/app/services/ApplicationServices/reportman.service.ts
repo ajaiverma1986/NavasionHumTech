@@ -10,20 +10,19 @@ export class ReportmanService  {
 
   constructor(private apiconnector: BaseserviceService) { }
 
-  GetAddressTypeMaster(): Observable<any> {
-    return this.apiconnector.GetAPI("AddressMaster");
+  GetAddressList(): Observable<any> {
+    return this.apiconnector.GetAPI("orderaddresses");
   }
   GetCustomerList(): Observable<any> {
-    return this.apiconnector.GetAPI("Customer");
+    return this.apiconnector.GetAPI("CustomerWebs");
   }
   GetcommItem(): Observable<any> {
-    return this.apiconnector.GetAPI("CommItem");
+    return this.apiconnector.GetAPI("CommItemWebs");
   }
-  GetPostCode(): Observable<any> {
-    return this.apiconnector.GetAPI("PostCode");
-  }
+  
   WebOrderMaster(PostData: TxnListRequest): Observable<any> {
 
-    return this.apiconnector.PostAPI("WebOrder", PostData);
+    return this.apiconnector.PostAPI("WebOrders", PostData);
   }
+ 
 }

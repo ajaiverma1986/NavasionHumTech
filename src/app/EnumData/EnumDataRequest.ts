@@ -1,5 +1,4 @@
 export enum OrderTypes {
-  "Order Type" = 0,
   "DOOR TO PORT" = 1,
   "PORT TO DOOR" = 2,
   "PORT TO PORT" = 3,

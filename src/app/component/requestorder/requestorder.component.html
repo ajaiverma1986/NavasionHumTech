@@ -2,6 +2,11 @@
     <div class="header">
         <h3>Order Master</h3>
     </div>
+     <!-- <ngx-spinner type="ball-scale-multiple"></ngx-spinner> -->
+     <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff"
+     type="ball-scale-multiple">
+     <p style="font-size: 20px; color: white">Loading...</p>
+ </ngx-spinner>
     <form [formGroup]="frmorder" (ngSubmit)="onSubmit()">
         <div class="row">
             <div class="col-md-12">
@@ -9,6 +14,7 @@
                 <hr>
             </div>
         </div>
+        
         <div class="row">
             <div class="col-md-4">
                 <div class="mb-3">
@@ -21,9 +27,10 @@
                     <input type="text" class="form-control" placeholder="No of Order">
                 </div>
                 <div class="mb-3">
-                    <select class="form-control" name="OrderType" [(ngModel)]="selectedOrdertype"  formControlName="OrderType">
-                       @for (item of orderType; track $index) {
-                        <option [value]="item" selected="item=selectedOrdertype">{{item}}</option>
+                    <select class="form-control" name="OrderType" [(ngModel)]="selectedOrdertype1"  formControlName="OrderType">
+                        <option [value]="0"> Order Type</option>
+                        @for (item of orderType; track $index) {
+                        <option [value]="item" selected="item=selectedOrdertype1">{{item}}</option>
                        }
                     </select>
                 </div>
@@ -31,17 +38,19 @@
                     <input type="text" class="form-control" placeholder="Order Date" name="OrderDate" formControlName="OrderDate" ngbDatepicker #d="ngbDatepicker" [(ngModel)]="orderDateval" (click)="d.toggle()">
                 </div>
                 <div class="mb-3">
-                    <select class="form-control" name="Customer" [(ngModel)]="selectedCustomer"  formControlName="Customer">
+                    <select class="form-control" name="Customer" [(ngModel)]="selectedCustomer"  formControlName="Customer" (change)="onChangeCustomer()">
+                        <option [value]="0"> Customer</option>
                         @for (item of custmodel; track $index) {
-                         <option [value]="item.No" selected="item=selectedCustomer">{{item.Name}}-{{item.No}}</option>
+                         <option [value]="item.no" selected="item=selectedCustomer">{{item.no}}</option>
                         }
                      </select>
                 </div>
                 <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="Customer Name">
+                    <input type="text" class="form-control" placeholder="Customer Name" formControlName="CustomerName"  readonly>
                 </div>
                 <div class="mb-3">
                     <select class="form-control" name="DeliveryTo" [(ngModel)]="selectedShipAddresstype"  formControlName="DeliveryTo">
+                        <option [value]="0"> Address Shiping Types</option>
                         @for (item of AddressshipingTypes; track $index) {
                          <option [value]="item" selected="item=selectedShipAddresstype">{{item}}</option>
                         }
@@ -49,15 +58,18 @@
                    
                 </div>
                 <div class="mb-3">
-                    <select class="form-control">
-                        <option selected> Party Code(Delivery To)</option>
-                        <option>Course 1</option>
-                        <option>Course 2</option>
-                        <option>Course 3</option>
-                    </select>
+                   
+                     <select class="form-control" name="DeliveryTo" [(ngModel)]="selectedDeliveryTo"  formControlName="DeliveryTo" (change)="onChangeDeliveryTo()">
+                        <option [value]="0"> Party Code(Delivery To)</option>
+                        @for (item of addressTypeModel; track $index) {
+                         <option [value]="item.partyCode" selected="item=selectedDeliveryTo">{{item.partyCode}}</option>
+                        }
+                     </select>
+
+                 
                 </div>
                 <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="Party Name(Delivery To)">
+                    <input type="text" class="form-control" placeholder="Party Name(Delivery To)" formControlName="DeliveryToName" readonly>
                 </div>
                 <div class="mb-3">
                     <select class="form-control">
@@ -107,15 +119,16 @@
                     <input type="text" class="form-control" placeholder="Container Seal No">
                 </div>
                 <div class="mb-3">
-                    <select class="form-control">
-                        <option selected>Comodity</option>
-                        <option>Course 1</option>
-                        <option>Course 2</option>
-                        <option>Course 3</option>
-                    </select>
+                   
+                    <select class="form-control" name="Comodity" [(ngModel)]="selectedCommodity"  formControlName="Comodity" (change)="onChangeComodity()">
+                        <option [value]="0" selected>Comodity</option>
+                        @for (item of CommItemWebModel; track $index) {
+                         <option [value]="item.no" selected="item=selectedCommodity">{{item.no}}</option>
+                        }
+                     </select>
                 </div>
                 <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="Comodity Name">
+                    <input type="text" class="form-control" placeholder="Comodity Name" formControlName="ComodityName" readonly>
                 </div>
                 <div class="mb-3">
                     <input type="text" class="form-control" placeholder="Rate Till Delivery">

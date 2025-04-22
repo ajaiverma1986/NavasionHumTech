@@ -89,54 +89,44 @@ export class GetFirmDetailByFirmId {
 }
 export class CustomerResponse
 {
-    "@odata.etag": string
-  No!: string
-  Name!: string
-  Address!: string
-  Post_Code!: string
-  GST_Registration_No!: string
-  P_A_N_No!: string
-  Salesperson_Code!: string
-  TAN_No!: string
-  Name_2!: string
-  Responsibility_Center!: string
-  Location_Code!: string
-  Country_Region_Code!: string
-  Phone_No!: string
-  IC_Partner_Code!: string
-  Contact!: string
-  Customer_Posting_Group!: string
-  Allow_Multiple_Posting_Groups!: boolean
-  Gen_Bus_Posting_Group!: string
-  VAT_Bus_Posting_Group!: string
-  Customer_Price_Group!: string
-  Customer_Disc_Group!: string
-  Payment_Terms_Code!: string
-  Reminder_Terms_Code!: string
-  Fin_Charge_Terms_Code!: string
-  Currency_Code!: string
-  Language_Code!: string
-  Search_Name!: string
-  Credit_Limit_LCY!: number
-  Blocked!: string
-  Privacy_Blocked!: boolean
-  Last_Date_Modified!: string
-  Application_Method!: string
-  Combine_Shipments!: boolean
-  Reserve!: string
-  Ship_to_Code!: string
-  Shipping_Advice!: string
-  Shipping_Agent_Code!: string
-  Base_Calendar_Code!: string
-  Balance_LCY!: number
-  Balance_Due_LCY!: number
-  Sales_LCY!: number
-  Payments_LCY!: number
-  Coupled_to_CRM!: boolean
-  Coupled_to_Dataverse!: boolean
-  Global_Dimension_1_Filter!: string
-  Global_Dimension_2_Filter!: string
-  Currency_Filter!: string
-  Date_Filter!: string
+   "@odata.etag": string
+  no!: string
+  name!: string
+  mobilePhoneNo!: string
+  city!: string
+  countryRegionCode!: string
+  county!: string
+  stateCode!: string
+  gstRegistrationNo!: string
+  gstRegistrationType!: string
+  gstCustomerType!: string
 }
-
+export class AddressTypeMasterResponse {
+   "@odata.etag": string
+  partyCode!: string
+  addressType!: string
+  partyName!: string
+  address!: string
+  city!: string
+  pincode!: string
+  primaryContactName!: string
+  primaryContactNo!: string
+  email!: string
+  gstin!: string
+  district!: string
+  taluka!: string
+  country!: string
+  vendorNo!: string
+  }
+  export class CommItemWebResponse {
+    "@odata.etag": string
+    no!: string
+    baseUnitOfMeasure!: string
+    description!: string
+    gst!: number
+    gstCredit!: string
+    gstGroupCode!: string
+    hsnSACCode!: string
+    useForCoastal!: boolean
+  }
+  

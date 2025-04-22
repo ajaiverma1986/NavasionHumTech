@@ -25,7 +25,7 @@ export class LoginServiceService {
   }
   login(): Observable<any> {
     let headers: HttpHeaders = this.getDefaultHeader();
-    return this.http.get<any>(this.apiurl+this.companyName+"WebUserList", { headers: headers });
+    return this.http.get<any>(this.apiurl+"WebUsers"+this.companyName, { headers: headers });
   }
 
 }
