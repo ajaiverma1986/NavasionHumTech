@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BaseserviceService } from '../baseservice.service';
-import {  TxnListRequest } from '../../RequestModel/ReportRequest';
+import {   WebOrderRequest } from '../../RequestModel/ReportRequest';
 import { Observable } from 'rxjs';
+import { WeborderRequestsingle } from '../../ResponseModel/ReportResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -20,9 +21,13 @@ export class ReportmanService  {
     return this.apiconnector.GetAPI("CommItemWebs");
   }
   
-  WebOrderMaster(PostData: TxnListRequest): Observable<any> {
-
-    return this.apiconnector.PostAPI("WebOrders", PostData);
+  WebOrderMaster(PostData: WebOrderRequest): Observable<WeborderRequestsingle> {
+    return this.apiconnector.PostAPI("WebOrderRails", PostData);
   }
- 
+   WebOrderMasterdetail(): Observable<any> {
+    return this.apiconnector.GetAPI("WebOrderRails");
+  }
+ GetAllCity(): Observable<any> {
+    return this.apiconnector.GetAPI("Citys");
+  }
 }

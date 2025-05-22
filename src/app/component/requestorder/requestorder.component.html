@@ -2,11 +2,10 @@
     <div class="header">
         <h3>Order Master</h3>
     </div>
-     <!-- <ngx-spinner type="ball-scale-multiple"></ngx-spinner> -->
-     <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff"
-     type="ball-scale-multiple">
-     <p style="font-size: 20px; color: white">Loading...</p>
- </ngx-spinner>
+    <!-- <ngx-spinner type="ball-scale-multiple"></ngx-spinner> -->
+    <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+        <p style="font-size: 20px; color: white">Loading...</p>
+    </ngx-spinner>
     <form [formGroup]="frmorder" (ngSubmit)="onSubmit()">
         <div class="row">
             <div class="col-md-12">
@@ -14,326 +13,163 @@
                 <hr>
             </div>
         </div>
-        
         <div class="row">
             <div class="col-md-4">
                 <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="No">
+                    <input type="text" class="form-control" placeholder="Order No" formControlName="OrderNo" readonly>
                 </div>
                 <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="Counter">
-                </div>
-                <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="No of Order">
-                </div>
-                <div class="mb-3">
-                    <select class="form-control" name="OrderType" [(ngModel)]="selectedOrdertype1"  formControlName="OrderType">
-                        <option [value]="0"> Order Type</option>
+                    <select class="form-control" name="OrderType" [(ngModel)]="selectedOrdertype1"
+                        formControlName="RailOrderType">
+                        <option [value]="0"> Rail Order Type</option>
                         @for (item of orderType; track $index) {
                         <option [value]="item" selected="item=selectedOrdertype1">{{item}}</option>
-                       }
+                        }
                     </select>
                 </div>
                 <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="Order Date" name="OrderDate" formControlName="OrderDate" ngbDatepicker #d="ngbDatepicker" [(ngModel)]="orderDateval" (click)="d.toggle()">
-                </div>
-                <div class="mb-3">
-                    <select class="form-control" name="Customer" [(ngModel)]="selectedCustomer"  formControlName="Customer" (change)="onChangeCustomer()">
-                        <option [value]="0"> Customer</option>
-                        @for (item of custmodel; track $index) {
-                         <option [value]="item.no" selected="item=selectedCustomer">{{item.no}}</option>
+                    <select class="form-control" name="DeliveryTo" [(ngModel)]="selectedShipAddresstype"
+                        (change)="OnChangesDeliveryTo()" formControlName="DeliveryTo">
+                        <option [value]="0"> DeliveryTo</option>
+                        @for (item of DeliveryTotypes; track $index) {
+                        <option [value]="item" selected="item=selectedShipAddresstype">{{item}}</option>
                         }
-                     </select>
-                </div>
-                <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="Customer Name" formControlName="CustomerName"  readonly>
-                </div>
-                <div class="mb-3">
-                    <select class="form-control" name="DeliveryTo" [(ngModel)]="selectedShipAddresstype"  formControlName="DeliveryTo">
-                        <option [value]="0"> Address Shiping Types</option>
-                        @for (item of AddressshipingTypes; track $index) {
-                         <option [value]="item" selected="item=selectedShipAddresstype">{{item}}</option>
-                        }
-                     </select>
-                   
-                </div>
-                <div class="mb-3">
-                   
-                     <select class="form-control" name="DeliveryTo" [(ngModel)]="selectedDeliveryTo"  formControlName="DeliveryTo" (change)="onChangeDeliveryTo()">
-                        <option [value]="0"> Party Code(Delivery To)</option>
-                        @for (item of addressTypeModel; track $index) {
-                         <option [value]="item.partyCode" selected="item=selectedDeliveryTo">{{item.partyCode}}</option>
-                        }
-                     </select>
+                    </select>
 
-                 
                 </div>
                 <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="Party Name(Delivery To)" formControlName="DeliveryToName" readonly>
-                </div>
-                <div class="mb-3">
-                    <select class="form-control">
-                        <option selected> Loading City</option>
-                        <option>Course 1</option>
-                        <option>Course 2</option>
-                        <option>Course 3</option>
+                    <select class="form-control" name="Partyname" [(ngModel)]="selectedPartyname"
+                        formControlName="Partyname">
+                        <option [value]=""> Party Name</option>
+                        @for (item of partyNameTypes; track $index) {
+                        <option [value]="item.partyName" selected="item=selectedPartyname">{{item.partyName}}</option>
+                        }
                     </select>
+
+                </div>
+                <div class="mb-3">
+                    <input type="number" class="form-control" placeholder="Loading Point" formControlName="LoadingPoint"
+                        step="0.001">
                 </div>
 
-            </div>
-            <div class="col-md-4">
                 <div class="mb-3">
-                    <select class="form-control">
-                        <option selected>Final Destination</option>
-                        <option>Course 1</option>
-                        <option>Course 2</option>
-                        <option>Course 3</option>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="Loading Points">
-                </div>
-                <div class="mb-3">
-                    <select class="form-control">
-                        <option selected>Terminal of Loading</option>
-                        <option>Course 1</option>
-                        <option>Course 2</option>
-                        <option>Course 3</option>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <select class="form-control">
-                        <option selected>Terminal of Destination</option>
-                        <option>Course 1</option>
-                        <option>Course 2</option>
-                        <option>Course 3</option>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="Container No">
-                </div>
-                <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="Container Size">
-                </div>
-                <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="Container Seal No">
-                </div>
-                <div class="mb-3">
-                   
-                    <select class="form-control" name="Comodity" [(ngModel)]="selectedCommodity"  formControlName="Comodity" (change)="onChangeComodity()">
+
+                    <select class="form-control" name="Comodity" [(ngModel)]="selectedCommodity"
+                        formControlName="Comodity">
                         <option [value]="0" selected>Comodity</option>
                         @for (item of CommItemWebModel; track $index) {
-                         <option [value]="item.no" selected="item=selectedCommodity">{{item.no}}</option>
+                        <option [value]="item.no" selected="item=selectedCommodity">{{item.description}}</option>
                         }
-                     </select>
-                </div>
-                <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="Comodity Name" formControlName="ComodityName" readonly>
-                </div>
-                <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="Rate Till Delivery">
-                </div>
-                <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="Lastmile Deli. Rate">
+                    </select>
                 </div>
 
-             
 
             </div>
+
+
+
             <div class="col-md-4">
+
                 <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="Net Amount">
-                </div>
-                <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="Tax Amount">
-                </div>
-                <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="Total Amount">
-                </div>
-                <div class="mb-3">
-                    <select class="form-control">
-                        <option selected>Shiping Line</option>
-                        <option>Course 1</option>
-                        <option>Course 2</option>
-                        <option>Course 3</option>
+                    <select class="form-control" name="OrderType" [(ngModel)]="BusinessSegmentselect"
+                        formControlName="BusinessSegment">
+                        <option [value]="0"> Business Segment</option>
+                        @for (item of Bussinesssegmenttype; track $index) {
+                        <option [value]="item" selected="item=BusinessSegmentselect">{{item}}</option>
+                        }
                     </select>
                 </div>
                 <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="Shiping Line Name">
+                    <select class="form-control" name="Customer" [(ngModel)]="selectedCustomer"
+                        formControlName="Customer" (change)="onChangeCustomer()">
+                        <option [value]="0"> Customer</option>
+                        @for (item of custmodel; track $index) {
+                        <option [value]="item.no" selected="item=selectedCustomer">{{item.no}}</option>
+                        }
+                    </select>
                 </div>
                 <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="Train FNR No">
+                    <select class="form-control" name="LoadingCity" [(ngModel)]="selectedCity"
+                        formControlName="LoadingCity">
+                        <option [value]="0"> Loading City</option>
+                        @for (item of cityModel; track $index) {
+                        <option [value]="item.city" selected="item=selectedCity">{{item.city}}</option>
+                        }
+                    </select>
                 </div>
                 <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="Terminal Date" name="TerminalDate" formControlName="TerminalDate" ngbDatepicker #d1="ngbDatepicker" [(ngModel)]="TerminalDateval" (click)="d1.toggle()">
-                   
+                    <select class="form-control" name="TerminalOfLoading" [(ngModel)]="selectedTMLoading"
+                        formControlName="TerminalOfLoading">
+                        <option [value]="0"> Terminal of Loading</option>
+                        @for (item of terminalofloadingtypes; track $index) {
+                        <option [value]="item.partyName" selected="item=selectedTMLoading">{{item.partyName}}</option>
+                        }
+                    </select>
+
                 </div>
                 <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="Train Departure Date" name="TrainDepatureDate" formControlName="TrainDepatureDate" ngbDatepicker #d2="ngbDatepicker" [(ngModel)]="TrainDDateval" (click)="d2.toggle()">
-                    
+                    <input type="number" class="form-control" placeholder="Weight in TONS"
+                        formControlName="WeightInTons" step="0.001">
                 </div>
                 <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="Payment Terms Codes">
+
+                    <select class="form-control" name="ShipingLineNo" [(ngModel)]="selectedShipingLineNo"
+                        (change)="OnChangeshipingLineNo()" formControlName="ShipingLineNo">
+                        <option value="0">Shiping Line No</option>
+                        @for (item of shipinglineNoTypes; track $index) {
+                        <option [value]="item.partyCode" selected="item=selectedShipingLineNo">{{item.partyCode}}
+                        </option>
+                        }
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <input type="text" class="form-control" placeholder="Order Date" name="OrderDate"
+                        formControlName="OrderDate" ngbDatepicker #d="ngbDatepicker" [(ngModel)]="selectedFromDate"
+                        (click)="d.toggle()">
                 </div>
                 <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="Order Status">
+                    <input type="text" class="form-control" placeholder="Customer Name" formControlName="CustomerName"
+                        readonly>
                 </div>
                 <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="Remarks">
+                    <select class="form-control" name="FinalDestination" [(ngModel)]="SelectedFinalDestination"
+                        formControlName="FinalDestination">
+                        <option [value]="0"> Final Destination</option>
+                        @for (item of cityModel; track $index) {
+                        <option [value]="item.city" selected="item=SelectedFinalDestination">{{item.city}}</option>
+                        }
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <select class="form-control" name="selectedTMDestination" [(ngModel)]="selectedTMDestination"
+                        formControlName="selectedTMDestination">
+                        <option [value]="0"> Terminal of Destination</option>
+                        @for (item of terminalofDestinattypes; track $index) {
+                        <option [value]="item.partyName" selected="item=selectedTMDestination">{{item.partyName}}
+                        </option>
+                        }
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <input type="number" class="form-control" placeholder="Rate_till_deliv_port " step="0.001"
+                        formControlName="Ratetilldelivport">
+                </div>
+                <div class="mb-3">
+                    <input type="text" class="form-control" placeholder="Shiping Line Name" readonly
+                        formControlName="ShipingLineName">
                 </div>
             </div>
 
         </div>
         <div class="row">
             <div class="col-md-12">
-                <span>Loading Points</span>
-                <hr>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="mb-3">
-                    <select class="form-control">
-                        <option selected>Loading Party Name 1</option>
-                        <option>Course 1</option>
-                        <option>Course 2</option>
-                        <option>Course 3</option>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="Mobile No1">
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="mb-3">
-                    <select class="form-control">
-                        <option selected>Location 1</option>
-                        <option>Course 1</option>
-                        <option>Course 2</option>
-                        <option>Course 3</option>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    Bill Change 1
-                    <label class="switch">
-                        <input type="checkbox">
-                        <span class="slider round"></span>
-                      </label>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="mb-3">
-                    <select class="form-control">
-                        <option selected>Bill Change Party 1</option>
-                        <option>Course 1</option>
-                        <option>Course 2</option>
-                        <option>Course 3</option>
-                    </select>
-                </div>
-               
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <span>Loading Points 2</span>
-                <hr>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="mb-3">
-                    <select class="form-control">
-                        <option selected>Loading Party Name 2</option>
-                        <option>Course 1</option>
-                        <option>Course 2</option>
-                        <option>Course 3</option>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="Mobile No 2">
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="mb-3">
-                    <select class="form-control">
-                        <option selected>Location 2</option>
-                        <option>Course 1</option>
-                        <option>Course 2</option>
-                        <option>Course 3</option>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    Bill Change 2
-                    <label class="switch">
-                        <input type="checkbox">
-                        <span class="slider round"></span>
-                      </label>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="mb-3">
-                    <select class="form-control">
-                        <option selected>Bill Change Party 2</option>
-                        <option>Course 1</option>
-                        <option>Course 2</option>
-                        <option>Course 3</option>
-                    </select>
-                </div>
-               
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <span>Loading Points 3</span>
-                <hr>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="mb-3">
-                    <select class="form-control">
-                        <option selected>Loading Party Name 3</option>
-                        <option>Course 1</option>
-                        <option>Course 2</option>
-                        <option>Course 3</option>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="Mobile No 3">
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="mb-3">
-                    <select class="form-control">
-                        <option selected>Location 3</option>
-                        <option>Course 1</option>
-                        <option>Course 2</option>
-                        <option>Course 3</option>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    Bill Change 2
-                    <label class="switch">
-                        <input type="checkbox">
-                        <span class="slider round"></span>
-                      </label>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="mb-3">
-                    <select class="form-control">
-                        <option selected>Bill Change Party 3</option>
-                        <option>Course 1</option>
-                        <option>Course 2</option>
-                        <option>Course 3</option>
-                    </select>
-                </div>
-               
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-              
+
                 <hr>
             </div>
         </div>

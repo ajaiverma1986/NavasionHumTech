@@ -129,4 +129,62 @@ export class AddressTypeMasterResponse {
     hsnSACCode!: string
     useForCoastal!: boolean
   }
-  
+  export class CitydataResponse {
+  "@odata.etag": string
+  code!: string
+  city!: string
+  countryRegionCode!: string
+  county!: string
+}
+export class WebOrderRailsResponse {
+  "@odata.etag": string
+  documentType!: string
+  OrderNo!: string
+  BusinessSegment!: string
+  WEBORDERNo!: number
+  WebOrder!: boolean
+  orderDate!: string
+  RailorderType!: string
+  Sell_Customer_No!: string
+  Sell_to_Customer_Name!: string
+  Delivery_To!: string
+  PartyName!: string
+  LoadingCity!: string
+  FinalDestination!: string
+  loadingPoint!: number
+  TerminalofLoading!: string
+  TerminalofDestination!: string
+  CommodityName!: string
+  Freight_On!: string
+  Weight_In_TON!: number
+  Rate_till_deliv_port!: number
+  Shipping_Line_No!: string
+  Shipping_Line_Name!: string
+}
+export class WeborderRequestsingle {
+  "@odata.context": string
+  "@odata.etag": string
+  documentType!: string
+  OrderNo!: string
+  BusinessSegment!: string
+  WEBORDERNo!: number
+  WebOrder!: boolean
+  orderDate!: string
+  RailorderType!: string
+  Sell_Customer_No!: string
+  Sell_to_Customer_Name!: string
+  Delivery_To!: string
+  PartyName!: string
+  LoadingCity!: string
+  FinalDestination!: string
+  loadingPoint!: number
+  TerminalofLoading!: string
+  TerminalofDestination!: string
+  CommodityName!: string
+  Freight_On!: string
+  Weight_In_TON!: number
+  Rate_till_deliv_port!: number
+  Shipping_Line_No!: string
+  Shipping_Line_Name!: string
+}
+
