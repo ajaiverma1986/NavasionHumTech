@@ -10,12 +10,16 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AddressTypeMasterResponse, CitydataResponse, CommItemWebResponse, CustomerResponse, WebOrderRailsResponse } from '../../ResponseModel/ReportResponse';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { WebOrderRequest } from '../../RequestModel/ReportRequest';
+import { MatTableModule } from '@angular/material/table';
+import { MatCardModule } from '@angular/material/card';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import {  MatIconModule } from "@angular/material/icon"
 
 
 @Component({
   selector: 'app-requestorder',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, NgbModule, NgxSpinnerModule],
+  imports: [ReactiveFormsModule, CommonModule, NgbModule, NgxSpinnerModule,MatTableModule, MatCardModule,MatIconModule, MatPaginatorModule],
   templateUrl: './requestorder.component.html',
   styleUrl: './requestorder.component.scss'
 })
@@ -54,7 +58,10 @@ export class RequestorderComponent extends BasecomponentComponent implements OnI
   selectedCity!: string;
   Model: WebOrderRequest = new WebOrderRequest();
   selectedFromDate: any;
- 
+  isnewOrder: boolean = false;
+
+    displayedColumns: string[] = ['documentType','OrderNo','BusinessSegment','WEBORDERNo','orderDate','RailorderType','Sell_Customer_No','Sell_to_Customer_Name','Delivery_To','PartyName','LoadingCity','FinalDestination','loadingPoint','TerminalofLoading','TerminalofDestination','CommodityName','Freight_On','Weight_In_TON','Rate_till_deliv_port','Shipping_Line_No','Shipping_Line_Name'];
+
 
   constructor(private router: Router, toast: ToastrService, private rpts: ReportmanService, private fb: FormBuilder, private spinner: NgxSpinnerService) {
     super(toast);
@@ -73,9 +80,9 @@ export class RequestorderComponent extends BasecomponentComponent implements OnI
     this.selectedShipingLineNo = "0";
     this.SelectedFinalDestination = "0";
     this.selectedPartyname = "0";
-this.selectedCity = "0";
+    this.selectedCity = "0";
 
-const now = new Date();
+    const now = new Date();
 
     this.selectedFromDate = { year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() };
 
@@ -90,18 +97,7 @@ const now = new Date();
       }
     });
 
-    this.rpts.WebOrderMasterdetail().subscribe({
-      next: (result) => {
-        this.weborderdet = result.value;
-        this.maxOrderNo1 = Math.max(...this.weborderdet.map(item => item.WEBORDERNo));
-        sessionStorage.setItem("Orderno", this.maxOrderNo1.toString());
-      }
-    });
-
-   
-    this.frmorder.patchValue({
-      OrderNo: "WEB/RAIL/25-26/" + ( Number( sessionStorage.getItem("Orderno"))+1).toString(),
-    });
+this. FillGrid();
 
 
     this.rpts.GetCustomerList().subscribe({
@@ -126,9 +122,26 @@ const now = new Date();
     this.spinner.hide();
 
   }
+  FillGrid() {
+    this.spinner.show();
+     this.rpts.WebOrderMasterdetail().subscribe({
+      next: (result) => {
+        this.weborderdet = result.value;
+      
+        this.maxOrderNo1 = Math.max(...this.weborderdet.map(item => item.WEBORDERNo));
+        sessionStorage.setItem("Orderno", this.maxOrderNo1.toString());
+      }
+    });
+
+
+    this.frmorder.patchValue({
+      OrderNo: "WEB/RAIL/25-26/" + (Number(sessionStorage.getItem("Orderno")) + 1).toString(),
+    });
+    this.spinner.hide();
+  }
   onSubmit() {
 
-   let val1 = (this.frmorder.get("OrderDate")?.value).year + "-" + (this.frmorder.get("OrderDate")?.value).month + "-" + (this.frmorder.get("OrderDate")?.value).day;
+    let val1 = (this.frmorder.get("OrderDate")?.value).year + "-" + (this.frmorder.get("OrderDate")?.value).month + "-" + (this.frmorder.get("OrderDate")?.value).day;
     this.Model.orderDate = formatDate(val1, 'yyyy-MM-dd', 'en');
     this.Model.documentType = "Order";
     this.Model.CommodityName = this.frmorder.get("Comodity")?.value;
@@ -150,7 +163,7 @@ const now = new Date();
     this.Model.WebOrder = true;
     this.Model.OrderNo = this.frmorder.get("OrderNo")?.value;
     this.Model.PartyName = this.frmorder.get("Partyname")?.value;
-    this.Model.WEBORDERNo = Number( sessionStorage.getItem("Orderno"))+1
+    this.Model.WEBORDERNo = Number(sessionStorage.getItem("Orderno")) + 1
 
 
     this.rpts.WebOrderMaster(this.Model).subscribe({
@@ -158,18 +171,7 @@ const now = new Date();
         if (result.WEBORDERNo > 0) {
           this.showToaster(1, "Order Created Successfully", "Success");
           this.frmorder.reset();
-           this.rpts.WebOrderMasterdetail().subscribe({
-      next: (result1) => {
-        this.weborderdet = result1.value;
-        this.maxOrderNo1 = Math.max(...this.weborderdet.map(item => item.WEBORDERNo));
-        sessionStorage.setItem("Orderno", this.maxOrderNo1.toString());
-      }
-    });
-
-   
-    this.frmorder.patchValue({
-      OrderNo: "WEB/RAIL/25-26/" + ( Number( sessionStorage.getItem("Orderno"))+1).toString(),
-    });
+          this. FillGrid();
         }
         else {
           this.showToaster(3, "Order Not Created", "Error");
@@ -221,5 +223,14 @@ const now = new Date();
   }
   OnChangesDeliveryTo() {
     this.partyNameTypes = this.addressTypeModel.filter(cust => cust.addressType == this.selectedShipAddresstype);
+  }
+  OnAddNewButtonclick() {
+    this.isnewOrder = true;
+  }
+  OnCancelButtonclick() {
+    this.isnewOrder = false;
+  }
+  OnExitButtonclick() {
+    this.exportAsExcelFile(this.weborderdet, "WebOrder");
   }
 }

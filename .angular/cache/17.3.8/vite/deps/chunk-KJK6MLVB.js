@@ -24583,6 +24583,7 @@ export {
   ConnectableObservable,
   Subject,
   BehaviorSubject,
+  ReplaySubject,
   asapScheduler,
   animationFrameScheduler,
   EMPTY,
@@ -25126,4 +25127,4 @@ export {
    * found in the LICENSE file at https://angular.io/license
    *)
 */
-//# sourceMappingURL=chunk-L57VFJXH.js.map
+//# sourceMappingURL=chunk-KJK6MLVB.js.map

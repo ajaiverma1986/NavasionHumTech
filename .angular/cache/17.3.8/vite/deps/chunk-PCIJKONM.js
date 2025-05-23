@@ -1,7 +1,7 @@
 import {
   DOCUMENT,
   isPlatformBrowser
-} from "./chunk-JGP54S7C.js";
+} from "./chunk-3YJH5TZR.js";
 import {
   ANIMATION_MODULE_TYPE,
   APP_ID,
@@ -78,34 +78,11 @@ import {
   ɵɵtext,
   ɵɵtextInterpolate1,
   ɵɵviewQuery
-} from "./chunk-L57VFJXH.js";
+} from "./chunk-KJK6MLVB.js";
 import {
   __spreadProps,
   __spreadValues
 } from "./chunk-WKYGNSYM.js";
-
-// node_modules/@angular/cdk/fesm2022/coercion.mjs
-function coerceBooleanProperty(value) {
-  return value != null && `${value}` !== "false";
-}
-function coerceNumberProperty(value, fallbackValue = 0) {
-  return _isNumberValue(value) ? Number(value) : fallbackValue;
-}
-function _isNumberValue(value) {
-  return !isNaN(parseFloat(value)) && !isNaN(Number(value));
-}
-function coerceArray(value) {
-  return Array.isArray(value) ? value : [value];
-}
-function coerceCssPixelValue(value) {
-  if (value == null) {
-    return "";
-  }
-  return typeof value === "string" ? value : `${value}px`;
-}
-function coerceElement(elementOrRef) {
-  return elementOrRef instanceof ElementRef ? elementOrRef.nativeElement : elementOrRef;
-}
 
 // node_modules/@angular/cdk/fesm2022/platform.mjs
 var hasV8BreakIterator;
@@ -307,6 +284,29 @@ function hasModifierKey(event, ...modifiers) {
     return modifiers.some((modifier) => event[modifier]);
   }
   return event.altKey || event.shiftKey || event.ctrlKey || event.metaKey;
+}
+
+// node_modules/@angular/cdk/fesm2022/coercion.mjs
+function coerceBooleanProperty(value) {
+  return value != null && `${value}` !== "false";
+}
+function coerceNumberProperty(value, fallbackValue = 0) {
+  return _isNumberValue(value) ? Number(value) : fallbackValue;
+}
+function _isNumberValue(value) {
+  return !isNaN(parseFloat(value)) && !isNaN(Number(value));
+}
+function coerceArray(value) {
+  return Array.isArray(value) ? value : [value];
+}
+function coerceCssPixelValue(value) {
+  if (value == null) {
+    return "";
+  }
+  return typeof value === "string" ? value : `${value}px`;
+}
+function coerceElement(elementOrRef) {
+  return elementOrRef instanceof ElementRef ? elementOrRef.nativeElement : elementOrRef;
 }
 
 // node_modules/@angular/cdk/fesm2022/observers.mjs
@@ -1298,6 +1298,17 @@ var ListKeyManager = class {
       if (newIndex > -1 && newIndex !== this._activeItemIndex) {
         this._activeItemIndex = newIndex;
       }
+    }
+  }
+};
+var ActiveDescendantKeyManager = class extends ListKeyManager {
+  setActiveItem(index) {
+    if (this.activeItem) {
+      this.activeItem.setInactiveStyles();
+    }
+    super.setActiveItem(index);
+    if (this.activeItem) {
+      this.activeItem.setActiveStyles();
     }
   }
 };
@@ -3165,6 +3176,28 @@ function _checkCdkVersionMatch() {
     console.warn("The Angular Material version (" + VERSION2.full + ") does not match the Angular CDK version (" + VERSION.full + ").\nPlease ensure the versions of these two packages exactly match.");
   }
 }
+var _ErrorStateTracker = class {
+  constructor(_defaultMatcher, ngControl, _parentFormGroup, _parentForm, _stateChanges) {
+    this._defaultMatcher = _defaultMatcher;
+    this.ngControl = ngControl;
+    this._parentFormGroup = _parentFormGroup;
+    this._parentForm = _parentForm;
+    this._stateChanges = _stateChanges;
+    this.errorState = false;
+  }
+  /** Updates the error state based on the provided error state matcher. */
+  updateErrorState() {
+    const oldState = this.errorState;
+    const parent = this._parentFormGroup || this._parentForm;
+    const matcher = this.matcher || this._defaultMatcher;
+    const control = this.ngControl ? this.ngControl.control : null;
+    const newState = matcher?.isErrorState(control, parent) ?? false;
+    if (newState !== oldState) {
+      this.errorState = newState;
+      this._stateChanges.next();
+    }
+  }
+};
 var MAT_DATE_LOCALE = new InjectionToken("MAT_DATE_LOCALE", {
   providedIn: "root",
   factory: MAT_DATE_LOCALE_FACTORY
@@ -4689,6 +4722,29 @@ var MatOption = _MatOption;
     }]
   });
 })();
+function _countGroupLabelsBeforeOption(optionIndex, options, optionGroups) {
+  if (optionGroups.length) {
+    let optionsArray = options.toArray();
+    let groups = optionGroups.toArray();
+    let groupCounter = 0;
+    for (let i = 0; i < optionIndex + 1; i++) {
+      if (optionsArray[i].group && optionsArray[i].group === groups[groupCounter]) {
+        groupCounter++;
+      }
+    }
+    return groupCounter;
+  }
+  return 0;
+}
+function _getOptionScrollPosition(optionOffset, optionHeight, currentScrollPosition, panelHeight) {
+  if (optionOffset < currentScrollPosition) {
+    return optionOffset;
+  }
+  if (optionOffset + optionHeight > currentScrollPosition + panelHeight) {
+    return Math.max(0, optionOffset - panelHeight + optionHeight);
+  }
+  return currentScrollPosition;
+}
 var _MatOptionModule = class _MatOptionModule {
 };
 _MatOptionModule.ɵfac = function MatOptionModule_Factory(t) {
@@ -4906,11 +4962,6 @@ var _MatInternalFormField = __MatInternalFormField;
 })();
 
 export {
-  coerceBooleanProperty,
-  coerceNumberProperty,
-  coerceArray,
-  coerceCssPixelValue,
-  coerceElement,
   Platform,
   normalizePassiveListenerOptions,
   RtlScrollAxisType,
@@ -4928,23 +4979,43 @@ export {
   DOWN_ARROW,
   A,
   hasModifierKey,
+  coerceBooleanProperty,
+  coerceNumberProperty,
+  _isNumberValue,
+  coerceArray,
+  coerceCssPixelValue,
+  coerceElement,
   CdkObserveContent,
   ObserversModule,
+  addAriaReferencedId,
+  removeAriaReferencedId,
+  AriaDescriber,
+  ActiveDescendantKeyManager,
   FocusKeyManager,
   InteractivityChecker,
   FocusTrapFactory,
   isFakeMousedownFromScreenReader,
   isFakeTouchstartFromScreenReader,
+  LiveAnnouncer,
   FocusMonitor,
+  A11yModule,
   Directionality,
   BidiModule,
   MatCommonModule,
+  _ErrorStateTracker,
+  ErrorStateMatcher,
   RippleState,
   RippleRenderer,
   MAT_RIPPLE_GLOBAL_OPTIONS,
   MatRipple,
   MatRippleModule,
   MatPseudoCheckboxModule,
+  MAT_OPTION_PARENT_COMPONENT,
+  MAT_OPTGROUP,
+  MatOption,
+  _countGroupLabelsBeforeOption,
+  _getOptionScrollPosition,
+  MatOptionModule,
   MatRippleLoader
 };
-//# sourceMappingURL=chunk-7MGR7RZZ.js.map
+//# sourceMappingURL=chunk-PCIJKONM.js.map
