@@ -1,7 +1,8 @@
 export const environment = {
-    Production:true,
-   // baseurl:" https://api.sanyuktpay.in",
-    // baseurl:"https://uatapi.sanyuktpay.in",
-   baseurl:"http://localhost:31130",
-    APIToken:"48550088-F090-495D-9F28-597E5FE22D6A"
+    Production:false,
+   baseurl:"http://111.90.175.54:7048/bc240demo/api/PSPL/APIPSPL/v1.0/",
+   Portno:7048,
+   ApiUsername:"BCAdmin",
+   ApiPassword:"DelGuj@@2024@@",
+   companyName:"?company='SSSPL 2025'"
 };
