@@ -16,11 +16,14 @@
         </div>
         <div class="row">
             <div class="col-md-4">
+               
                 <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="Order No" formControlName="OrderNo" readonly>
+                     <label for="OrderNo" class="form-label fw-bold">Order No</label>
+                    <input type="text" class="form-control" name="OrderNo" formControlName="OrderNo" readonly>
                 </div>
                 <div class="mb-3">
-                    <select class="form-control" name="OrderType" [(ngModel)]="selectedOrdertype1"
+                  <label for="RailOrderType" class="form-label fw-bold">Rail Order Type</label>
+                    <select class="form-control" name="RailOrderType" [(ngModel)]="selectedOrdertype1"
                         formControlName="RailOrderType">
                         <option [value]="0"> Rail Order Type</option>
                         @for (item of orderType; track $index) {
@@ -29,6 +32,7 @@
                     </select>
                 </div>
                 <div class="mb-3">
+                   <label for="DeliveryTo" class="form-label fw-bold">Delivery To</label>
                     <select class="form-control" name="DeliveryTo" [(ngModel)]="selectedShipAddresstype"
                         (change)="OnChangesDeliveryTo()" formControlName="DeliveryTo">
                         <option [value]="0"> DeliveryTo</option>
@@ -39,6 +43,7 @@
 
                 </div>
                 <div class="mb-3">
+                     <label for="Partyname" class="form-label fw-bold">Party Name</label>
                     <select class="form-control" name="Partyname" [(ngModel)]="selectedPartyname"
                         formControlName="Partyname">
                         <option [value]=""> Party Name</option>
@@ -49,12 +54,19 @@
 
                 </div>
                 <div class="mb-3">
-                    <input type="number" class="form-control" placeholder="Loading Point" formControlName="LoadingPoint"
+                 <label for="LoadingPoint" class="form-label fw-bold">Loading Point</label>
+                    <input type="number" class="form-control" name ="LoadingPoint" placeholder="0" formControlName="LoadingPoint"
                         step="0.001">
+                        @if (this.frmorder.get('LoadingPoint')?.hasError('LoadingPoint') &&
+                                    (this.frmorder.get('LoadingPoint')?.touched ||
+                                    this.frmorder.get('LoadingPoint')?.dirty))
+                                    {
+                                    <div class="text-danger">Loading Point is Required</div>
+                                    }
                 </div>
 
                 <div class="mb-3">
-
+ <label for="Comodity" class="form-label fw-bold">Comodity</label>
                     <select class="form-control" name="Comodity" [(ngModel)]="selectedCommodity"
                         formControlName="Comodity">
                         <option [value]="0" selected>Comodity</option>
@@ -72,7 +84,8 @@
             <div class="col-md-4">
 
                 <div class="mb-3">
-                    <select class="form-control" name="OrderType" [(ngModel)]="BusinessSegmentselect"
+                  <label for="BusinessSegment" class="form-label fw-bold">Business Segment</label>
+                    <select class="form-control" name="BusinessSegment" [(ngModel)]="BusinessSegmentselect"
                         formControlName="BusinessSegment">
                         <option [value]="0"> Business Segment</option>
                         @for (item of Bussinesssegmenttype; track $index) {
@@ -81,15 +94,20 @@
                     </select>
                 </div>
                 <div class="mb-3">
+                    <label for="Customer" class="form-label fw-bold">Customer</label>
                     <select class="form-control" name="Customer" [(ngModel)]="selectedCustomer"
                         formControlName="Customer" (change)="onChangeCustomer()">
                         <option [value]="0"> Customer</option>
                         @for (item of custmodel; track $index) {
-                        <option [value]="item.no" selected="item=selectedCustomer">{{item.no}}</option>
+                        <option [value]="item.no" selected="item=selectedCustomer">{{item.name}}</option>
                         }
                     </select>
+
+
+
                 </div>
                 <div class="mb-3">
+                  <label for="LoadingCity" class="form-label fw-bold">Loading City</label>
                     <select class="form-control" name="LoadingCity" [(ngModel)]="selectedCity"
                         formControlName="LoadingCity">
                         <option [value]="0"> Loading City</option>
@@ -99,6 +117,7 @@
                     </select>
                 </div>
                 <div class="mb-3">
+                  <label for="TerminalOfLoading" class="form-label fw-bold">Terminal Of Loading</label>
                     <select class="form-control" name="TerminalOfLoading" [(ngModel)]="selectedTMLoading"
                         formControlName="TerminalOfLoading">
                         <option [value]="0"> Terminal of Loading</option>
@@ -109,11 +128,12 @@
 
                 </div>
                 <div class="mb-3">
-                    <input type="number" class="form-control" placeholder="Weight in TONS"
-                        formControlName="WeightInTons" step="0.001">
+                  <label for="WeightInTons" class="form-label fw-bold">Weight in TONS</label>
+                    <input type="number" class="form-control" placeholder="0"
+                        formControlName="WeightInTons" step="0.001" name="WeightInTons">
                 </div>
                 <div class="mb-3">
-
+<label for="ShipingLineNo" class="form-label fw-bold">Shiping Line No</label>
                     <select class="form-control" name="ShipingLineNo" [(ngModel)]="selectedShipingLineNo"
                         (change)="OnChangeshipingLineNo()" formControlName="ShipingLineNo">
                         <option value="0">Shiping Line No</option>
@@ -130,15 +150,18 @@
 
             <div class="col-md-4">
                 <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="Order Date" name="OrderDate"
+                  <label for="OrderDate" class="form-label fw-bold">Order Date</label>
+                    <input type="text" class="form-control"  name="OrderDate"
                         formControlName="OrderDate" ngbDatepicker #d="ngbDatepicker" [(ngModel)]="selectedFromDate"
                         (click)="d.toggle()">
                 </div>
                 <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="Customer Name" formControlName="CustomerName"
+                     <label for="CustomerName" class="form-label fw-bold">Customer Name</label>
+                    <input type="text" class="form-control" name="CustomerName" formControlName="CustomerName"
                         readonly>
                 </div>
                 <div class="mb-3">
+                     <label for="FinalDestination" class="form-label fw-bold">Final Destination</label>
                     <select class="form-control" name="FinalDestination" [(ngModel)]="SelectedFinalDestination"
                         formControlName="FinalDestination">
                         <option [value]="0"> Final Destination</option>
@@ -148,6 +171,7 @@
                     </select>
                 </div>
                 <div class="mb-3">
+                  <label for="selectedTMDestination" class="form-label fw-bold">Terminal of Destination</label>
                     <select class="form-control" name="selectedTMDestination" [(ngModel)]="selectedTMDestination"
                         formControlName="selectedTMDestination">
                         <option [value]="0"> Terminal of Destination</option>
@@ -158,11 +182,13 @@
                     </select>
                 </div>
                 <div class="mb-3">
-                    <input type="number" class="form-control" placeholder="Rate_till_deliv_port " step="0.001"
+                    <label for="Ratetilldelivport" class="form-label fw-bold">Rate_Till_deliv_port</label>
+                    <input type="number" class="form-control" placeholder="0" step="0.001" name="Ratetilldelivport"
                         formControlName="Ratetilldelivport">
                 </div>
                 <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="Shiping Line Name" readonly
+                   <label for="ShipingLineName" class="form-label fw-bold">Shiping Line Name</label>
+                    <input type="text" class="form-control"  readonly name="ShipingLineName"
                         formControlName="ShipingLineName">
                 </div>
             </div>
@@ -174,8 +200,9 @@
                 <hr>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>&nbsp;
-        <button type="button" class="btn btn-primary" (click)="OnCancelButtonclick()">Cancel</button>
+        <button type="submit" [disabled]="!frmorder.valid" class="btn btn-success"><i class="bi bi-save me-2" style="background-color: #42a8df;" ></i>Submit</button>&nbsp;
+        <button type="button" class="btn btn-success"  style="background-color: red;" (click)="OnCancelButtonclick()">
+          <i class="bi bi-x-circle me-2"></i>Cancel</button>
     </form>
 </div>
 }
@@ -189,8 +216,11 @@
               <div class="row">
                 <div class="col">
                     <h1 class="justify-content-start common-section-heading">Order List</h1>
-                    <button type="button" class="btn btn-primary" (click)="OnAddNewButtonclick()">New Order</button> &nbsp;
-                     <button type="button" class="btn btn-primary" (click)="OnExitButtonclick()">Export to excel</button>
+                    <button type="button" class="btn btn-success" style="background-color: #42a8df;" (click)="OnAddNewButtonclick()">
+                      <i class="bi bi-plus-circle me-2"></i>New Order</button> &nbsp;
+                     <button type="button" class="btn btn-success" style="background-color: #42a8df;" (click)="OnExitButtonclick()">
+                      <i class="bi bi-file-earmark-excel me-1"></i>  Export to Excel
+                     </button>
                 </div>
             <mat-card-content>
             @if ((weborderdet!=null)) {
@@ -291,6 +321,10 @@
                   </table>
                 </div>
                 }
+                @else {
+                <div class="text-center">
+                  <p>No data available</p>
+                </div>}
                 </mat-card-content>
              
             </div>

@@ -13,7 +13,7 @@ import {
   coerceNumberProperty,
   getRtlScrollAxisType,
   supportsScrollBehavior
-} from "./chunk-PCIJKONM.js";
+} from "./chunk-TTYTPCSV.js";
 import {
   DOCUMENT
 } from "./chunk-3YJH5TZR.js";
@@ -1608,4 +1608,4 @@ export {
   CdkScrollableModule,
   ScrollingModule
 };
-//# sourceMappingURL=chunk-2SUXBXNF.js.map
+//# sourceMappingURL=chunk-JHF2Z2WM.js.map

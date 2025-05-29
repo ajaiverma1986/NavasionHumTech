@@ -6,13 +6,13 @@ import {
   NoopAnimationDriver,
   WebAnimationsDriver,
   WebAnimationsStyleNormalizer
-} from "./chunk-7GC3KYZH.js";
+} from "./chunk-K2WFB45H.js";
+import "./chunk-ITXKGTIN.js";
 import {
   BrowserModule,
   DomRendererFactory2
 } from "./chunk-XFCOGFAP.js";
 import "./chunk-M2ZUSOHH.js";
-import "./chunk-CEEP47T4.js";
 import {
   DOCUMENT
 } from "./chunk-3YJH5TZR.js";

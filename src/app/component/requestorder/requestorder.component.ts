@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ReportmanService } from '../../services/ApplicationServices/reportman.service';
 import { OrderTypes, AddressShipingType, BussinessSegment, DeliveryToEnum } from '../../EnumData/EnumDataRequest';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule, formatDate } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AddressTypeMasterResponse, CitydataResponse, CommItemWebResponse, CustomerResponse, WebOrderRailsResponse } from '../../ResponseModel/ReportResponse';
@@ -13,13 +13,18 @@ import { WebOrderRequest } from '../../RequestModel/ReportRequest';
 import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import {  MatIconModule } from "@angular/material/icon"
+import { MatIconModule } from "@angular/material/icon"
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+
 
 
 @Component({
   selector: 'app-requestorder',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, NgbModule, NgxSpinnerModule,MatTableModule, MatCardModule,MatIconModule, MatPaginatorModule],
+  imports: [ReactiveFormsModule, CommonModule, NgbModule, NgxSpinnerModule, MatTableModule, MatCardModule, MatIconModule, MatPaginatorModule, MatAutocompleteModule, MatFormFieldModule, MatInputModule, NgxMatSelectSearchModule],
   templateUrl: './requestorder.component.html',
   styleUrl: './requestorder.component.scss'
 })
@@ -60,7 +65,10 @@ export class RequestorderComponent extends BasecomponentComponent implements OnI
   selectedFromDate: any;
   isnewOrder: boolean = false;
 
-    displayedColumns: string[] = ['documentType','OrderNo','BusinessSegment','WEBORDERNo','orderDate','RailorderType','Sell_Customer_No','Sell_to_Customer_Name','Delivery_To','PartyName','LoadingCity','FinalDestination','loadingPoint','TerminalofLoading','TerminalofDestination','CommodityName','Freight_On','Weight_In_TON','Rate_till_deliv_port','Shipping_Line_No','Shipping_Line_Name'];
+
+
+
+  displayedColumns: string[] = ['documentType', 'OrderNo', 'BusinessSegment', 'WEBORDERNo', 'orderDate', 'RailorderType', 'Sell_Customer_No', 'Sell_to_Customer_Name', 'Delivery_To', 'PartyName', 'LoadingCity', 'FinalDestination', 'loadingPoint', 'TerminalofLoading', 'TerminalofDestination', 'CommodityName', 'Freight_On', 'Weight_In_TON', 'Rate_till_deliv_port', 'Shipping_Line_No', 'Shipping_Line_Name'];
 
 
   constructor(private router: Router, toast: ToastrService, private rpts: ReportmanService, private fb: FormBuilder, private spinner: NgxSpinnerService) {
@@ -82,6 +90,8 @@ export class RequestorderComponent extends BasecomponentComponent implements OnI
     this.selectedPartyname = "0";
     this.selectedCity = "0";
 
+
+
     const now = new Date();
 
     this.selectedFromDate = { year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() };
@@ -97,7 +107,7 @@ export class RequestorderComponent extends BasecomponentComponent implements OnI
       }
     });
 
-this. FillGrid();
+    this.FillGrid();
 
 
     this.rpts.GetCustomerList().subscribe({
@@ -124,20 +134,14 @@ this. FillGrid();
   }
   FillGrid() {
     this.spinner.show();
-     this.rpts.WebOrderMasterdetail().subscribe({
-      next: (result) => {
-        this.weborderdet = result.value;
-      
-        this.maxOrderNo1 = Math.max(...this.weborderdet.map(item => item.WEBORDERNo));
-        sessionStorage.setItem("Orderno", this.maxOrderNo1.toString());
-      }
-    });
-
-
-    this.frmorder.patchValue({
-      OrderNo: "WEB/RAIL/25-26/" + (Number(sessionStorage.getItem("Orderno")) + 1).toString(),
-    });
-    this.spinner.hide();
+      this.rpts.WebOrderMasterdetail().subscribe({
+        next: (result) => {
+          this.weborderdet = result.value;
+          this.maxOrderNo1 = Math.max(...this.weborderdet.map(item => item.WEBORDERNo));
+          sessionStorage.setItem("Orderno", this.maxOrderNo1.toString());
+        }
+      });
+      this.spinner.hide();
   }
   onSubmit() {
 
@@ -163,6 +167,8 @@ this. FillGrid();
     this.Model.WebOrder = true;
     this.Model.OrderNo = this.frmorder.get("OrderNo")?.value;
     this.Model.PartyName = this.frmorder.get("Partyname")?.value;
+
+ 
     this.Model.WEBORDERNo = Number(sessionStorage.getItem("Orderno")) + 1
 
 
@@ -171,7 +177,7 @@ this. FillGrid();
         if (result.WEBORDERNo > 0) {
           this.showToaster(1, "Order Created Successfully", "Success");
           this.frmorder.reset();
-          this. FillGrid();
+          this.isnewOrder = false;
         }
         else {
           this.showToaster(3, "Order Not Created", "Error");
@@ -182,7 +188,7 @@ this. FillGrid();
   }
   createOrderForm() {
     this.frmorder = this.fb.group({
-      OrderNo: [''],
+      OrderNo: ['',[Validators.required]],
       DeliveryTo: [''],
       BusinessSegment: [''],
       OrderDate: [''],
@@ -190,9 +196,9 @@ this. FillGrid();
       Customer: [''],
       CustomerName: [''],
       Comodity: [''],
-      LoadingPoint: [''],
-      WeightInTons: [''],
-      Ratetilldelivport: [''],
+      LoadingPoint: ['', [Validators.required,Validators.minLength(1)]],
+      WeightInTons: ['',[Validators.required,Validators.minLength(1)]],
+      Ratetilldelivport: ['',[Validators.required,Validators.minLength(1)]],
       ShipingLineNo: [''],
       LoadingCity: [''],
       TerminalOfLoading: [''],
@@ -226,6 +232,9 @@ this. FillGrid();
   }
   OnAddNewButtonclick() {
     this.isnewOrder = true;
+        this.frmorder.patchValue({
+        OrderNo: "WEB/RAIL/25-26/" + (Number(sessionStorage.getItem("Orderno")) + 1).toString(),
+      });
   }
   OnCancelButtonclick() {
     this.isnewOrder = false;
@@ -233,4 +242,5 @@ this. FillGrid();
   OnExitButtonclick() {
     this.exportAsExcelFile(this.weborderdet, "WebOrder");
   }
+
 }

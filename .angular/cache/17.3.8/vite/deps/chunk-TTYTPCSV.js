@@ -144,6 +144,50 @@ var PlatformModule = _PlatformModule;
     args: [{}]
   }], null, null);
 })();
+var supportedInputTypes;
+var candidateInputTypes = [
+  // `color` must come first. Chrome 56 shows a warning if we change the type to `color` after
+  // first changing it to something else:
+  // The specified value "" does not conform to the required format.
+  // The format is "#rrggbb" where rr, gg, bb are two-digit hexadecimal numbers.
+  "color",
+  "button",
+  "checkbox",
+  "date",
+  "datetime-local",
+  "email",
+  "file",
+  "hidden",
+  "image",
+  "month",
+  "number",
+  "password",
+  "radio",
+  "range",
+  "reset",
+  "search",
+  "submit",
+  "tel",
+  "text",
+  "time",
+  "url",
+  "week"
+];
+function getSupportedInputTypes() {
+  if (supportedInputTypes) {
+    return supportedInputTypes;
+  }
+  if (typeof document !== "object" || !document) {
+    supportedInputTypes = new Set(candidateInputTypes);
+    return supportedInputTypes;
+  }
+  let featureTestInput = document.createElement("input");
+  supportedInputTypes = new Set(candidateInputTypes.filter((value) => {
+    featureTestInput.setAttribute("type", value);
+    return featureTestInput.type === value;
+  }));
+  return supportedInputTypes;
+}
 var supportsPassiveEvents;
 function supportsPassiveEventListeners() {
   if (supportsPassiveEvents == null && typeof window !== "undefined") {
@@ -4963,6 +5007,7 @@ var _MatInternalFormField = __MatInternalFormField;
 
 export {
   Platform,
+  getSupportedInputTypes,
   normalizePassiveListenerOptions,
   RtlScrollAxisType,
   supportsScrollBehavior,
@@ -4970,6 +5015,7 @@ export {
   _getFocusedElementPierceShadowDom,
   _getEventTarget,
   _isTestEnvironment,
+  TAB,
   ENTER,
   ESCAPE,
   SPACE,
@@ -5012,10 +5058,13 @@ export {
   MatPseudoCheckboxModule,
   MAT_OPTION_PARENT_COMPONENT,
   MAT_OPTGROUP,
+  MatOptgroup,
+  MatOptionSelectionChange,
   MatOption,
   _countGroupLabelsBeforeOption,
   _getOptionScrollPosition,
   MatOptionModule,
-  MatRippleLoader
+  MatRippleLoader,
+  _MatInternalFormField
 };
-//# sourceMappingURL=chunk-PCIJKONM.js.map
+//# sourceMappingURL=chunk-TTYTPCSV.js.map
